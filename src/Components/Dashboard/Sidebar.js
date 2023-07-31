@@ -9,11 +9,13 @@ import PrimaryButton from '../Button/PrimaryButton'
 import GuestMenu from './GuestMenu'
 
 
-const Sidebar = () => {
-  const { user, logOut, role } = useContext(AuthContext)
+const Sidebar = ({role, loading}) => {
+  const { user, logOut} = useContext(AuthContext)
   const [toggle, setToggle] = useState(false)
   const [isActive, setActive] = useState('false')
   const navigate = useNavigate()
+
+  console.log(role, "role");
 
 
   const toggleHandler = event => {

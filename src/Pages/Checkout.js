@@ -51,7 +51,7 @@ const Checkout = () => {
         toast.success('Successfully posted your bookings')
     })
     .catch(err => 
-        toast.error(err.massage)
+        toast.error(err?.massage)
         );
  }
 

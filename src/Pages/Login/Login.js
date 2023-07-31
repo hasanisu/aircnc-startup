@@ -45,7 +45,7 @@ const Login = () => {
     signInWithGoogle()
     .then(result => {
       console.log(result.user)
-      setAuthToken(result.name, result.email, result.photoURL)
+      setAuthToken(result.user.displayName, result.user.email, result.user.photoURL)
       navigate(from, {replace: true})
       })
     .catch(err=>console.error(err))

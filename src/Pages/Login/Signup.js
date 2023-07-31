@@ -29,7 +29,7 @@ const Signup = () => {
     // imageBB api key f8e681f5c3c1f72f54dd1176bc26e71b
     const formData = new FormData()
     formData.append('image', image)
-    const url = `https://api.imgbb.com/1/upload?key=f8e681f5c3c1f72f54dd1176bc26e71b`
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMGBB_KEY}`
 
     fetch(url, {
       method: 'POST',
@@ -71,8 +71,7 @@ const Signup = () => {
   const handleToLoginWithGoogle=()=>{
     signInWithGoogle()
     .then(result => {
-      console.log(result.user)
-      setAuthToken(result.name, result.email, result.photoURL)
+      setAuthToken(result.user.displayName,  result.user.photoURL, result.user.email,)
       navigate(from, {replace: true})
       })
     .catch(err=>console.error(err))

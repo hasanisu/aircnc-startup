@@ -1,8 +1,10 @@
-export const setAuthToken =(email, name, image )=>{
+export const setAuthToken =(name, email, image )=>{
     const currentUser={
-        email,
         name,
         image,
+        email,
+        
+        
     }
     
         fetch(`http://localhost:7000/user/${email}`,{

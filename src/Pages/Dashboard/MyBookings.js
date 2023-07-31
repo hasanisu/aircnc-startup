@@ -1,25 +1,34 @@
 import { useContext, useEffect, useState } from 'react'
 import { getAllBookings, getAllBookingsByEmail } from '../../api/bookings';
+import Spinner from '../../Components/Spinner/Spinner';
 
 
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const MyBookings = () => {
+  const { user } = useContext(AuthContext)
     const [bookings, setBookings] = useState([])
-    const { user } = useContext(AuthContext)
+    const [bookingLoading, setBookingLoading] = useState(false)
 
-    //Get booking by query
-    const fetchBookings = () => {
+    useEffect(() => {
+      setBookingLoading(true)
       getAllBookingsByEmail(user?.email).then(data => {
         setBookings(data)
+        setBookingLoading(false)
       })
-    }
-    useEffect(() => {
-      fetchBookings()
+      .catch(err => {
+        console.log(err)
+        setBookingLoading(false);
+      })
+      
     }, [user])
 
 
     return (
+      <>
+      {
+        bookingLoading ? <Spinner/> :
+
         <div className='container mx-auto px-4 sm:px-8'>
         <div className='py-8'>
           <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
@@ -80,6 +89,8 @@ const MyBookings = () => {
           </div>
         </div>
       </div>
+      }
+      </>
     );
 };
 

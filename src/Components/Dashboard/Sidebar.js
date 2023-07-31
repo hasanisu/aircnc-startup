@@ -131,11 +131,11 @@ const Sidebar = () => {
             <span className='mx-4 font-medium'>Profile</span>
           </NavLink>
 
-          <PrimaryButton>
+          <PrimaryButton classes={'rounded-full'}>
           <button
             onClick={handleLogOut}
             
-            className='flex h-5 items-center px-4 pr-24 mt-2 mb-2 text-gray-600 hover:text-gray-700 transition-colors duration-300 transform'
+            className='flex h-5 items-center px-4 pr-28 mt-2 mb-2 text-gray-600 hover:text-gray-700 transition-colors duration-300 transform'
           >
             <GrLogout className='w-5 h-5' />
 

@@ -7,10 +7,12 @@ import { AiOutlineBars } from 'react-icons/ai'
 import Logo from '../../Pages/Shared/Navbar/Logo'
 import PrimaryButton from '../Button/PrimaryButton'
 import GuestMenu from './GuestMenu'
+import AdminMenu from './AdminMenu'
+import HostMenu from './HostMenu'
 
 
 const Sidebar = ({role, loading}) => {
-  const { user, logOut} = useContext(AuthContext)
+  const { user, logout} = useContext(AuthContext)
   const [toggle, setToggle] = useState(false)
   const [isActive, setActive] = useState('false')
   const navigate = useNavigate()
@@ -28,9 +30,12 @@ const Sidebar = ({role, loading}) => {
     setActive(!isActive)
   }
 
-  const handleLogOut = () => {
-    logOut()
-    navigate('/')
+  const signOut=()=>{
+    logout()
+    .then(()=>{
+      navigate('/')
+    })
+    .catch(err=>console.error(err))
   }
 
 
@@ -58,6 +63,8 @@ const Sidebar = ({role, loading}) => {
           isActive && '-translate-x-full'
         }  md:translate-x-0  transition duration-200 ease-in-out`}
       >
+
+
         <div>
           {/* Branding & Profile Info */}
           <div>
@@ -89,9 +96,11 @@ const Sidebar = ({role, loading}) => {
           {/* Nav Items */}
           <div className='flex flex-col justify-between flex-1 mt-6'>
           <nav>
-              {role && role === 'host' ? (
+              {role && role !== 'requested' ? (
                 <>
-                  <label
+
+                {role === 'admin' ? <AdminMenu/> : <HostMenu/> }
+                  {/* <label
                     htmlFor='Toggle3'
                     className='inline-flex w-full justify-center items-center px-2 rounded-md cursor-pointer text-gray-800'
                   >
@@ -107,9 +116,8 @@ const Sidebar = ({role, loading}) => {
                     <span className='px-4 py-1 rounded-r-md bg-gray-300 peer-checked:bg-rose-400'>
                       Host
                     </span>
-                  </label>
-                  {/* Menu Links */}
-                  {/* {/* {toggle ? <HostMenu /> : <GuestMenu />} */}
+                  </label> */}
+    
                 </>
               ) : (
                 <GuestMenu />
@@ -135,7 +143,7 @@ const Sidebar = ({role, loading}) => {
 
           <PrimaryButton classes={'rounded-full'}>
           <button
-            onClick={handleLogOut}
+            onClick={signOut}
             
             className='flex h-5 items-center px-4 pr-28 mt-2 mb-2 text-gray-600 hover:text-gray-700 transition-colors duration-300 transform'
           >

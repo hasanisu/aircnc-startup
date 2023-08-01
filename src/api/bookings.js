@@ -26,7 +26,7 @@ export const getAllBookingsByEmail = async (email)=>{
 }
 
 
-// Get booking for Admin
+// Get all bookings for Admin
 export const getAllBookings = async ()=>{
 
     const url = `http://localhost:7000/bookings`;

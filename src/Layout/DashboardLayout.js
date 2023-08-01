@@ -18,6 +18,7 @@ const DashboardLayout = () => {
       setLoading(false);
     });
   }, [user]);
+
   return (
     <div className="md:flex relative min-h-screen">
       {loading ? (

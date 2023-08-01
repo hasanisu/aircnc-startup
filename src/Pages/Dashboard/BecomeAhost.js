@@ -34,7 +34,7 @@ const BecomeAhost = () => {
                 role: 'requested',
                 email: user.email,
             }
-            hostRequest(hostData).then(data => console.log(data))
+            hostRequest(hostData).then(data => console.log(data)).catch(err => console.log(err))
         })
 
 

@@ -3,10 +3,10 @@ import React, { useContext, useState } from 'react'
 import {format} from 'date-fns';
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { addHome } from '../api/services'
-import AddServiceForm from '../Components/Form/AddServiceForm'
-import { AuthContext } from '../contexts/AuthProvider'
-import { getImageUrl } from '../api/imageUpload';
+import { addHome } from '../../api/services'
+import AddServiceForm from '../../Components/Form/AddServiceForm'
+import { AuthContext } from '../../contexts/AuthProvider'
+import { getImageUrl } from '../../api/imageUpload';
 
 const AddHome = () => {
   const navigate = useNavigate()
@@ -24,8 +24,8 @@ const AddHome = () => {
 
     const location = event.target.location.value
     const title = event.target.title.value
-    const from = format(arrivalDate, 'P')
-    const to = format(departureDate, 'P')
+    const from = arrivalDate
+    const to = departureDate
     const price = event.target.price.value
     const guests = event.target.total_guest.value
     const bedrooms = event.target.bedrooms.value
@@ -34,7 +34,7 @@ const AddHome = () => {
     // const category = event.target.category.value
     const image = event.target.image.files[0]
     // setUploadButtonText('Uploading...')
-    
+    setLoading(true)
     getImageUrl(image)
       .then(data => {
         const roomData = {
@@ -60,10 +60,12 @@ const AddHome = () => {
         // post room data to server
         addHome(roomData)
           .then(data => {
-            toast.success('Succesfully add your home')
+            setLoading(false)
+            toast.success('Home Added')
+            navigate('/dashboard/manage-homes')
           })
           .catch(err => console.log(err))
-          setLoading(false)
+          
       })
       .catch(err => {
         console.log(err.message)

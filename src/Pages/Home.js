@@ -1,15 +1,31 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { getAllHomes } from '../api/services';
 import ExpCard from '../Components/Card/ExpCard';
 import HomeCard from '../Components/Card/HomeCard';
 import SearchForm from '../Components/Form/SearchForm';
 import Spinner from '../Components/Spinner/Spinner'
+
+
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [allExp, setAllExp] = useState([])
+  const [allHomes, setAllHomes] = useState([])
 
   useEffect(() => {
+    setLoading(true)
+    getAllHomes()
+    .then(data => {
+      console.log(data, 'home data')
+      setAllHomes(data)
+      setLoading(false)
+    
+    })
+    .catch(err => {
+      console.log(err)
+      setLoading(false)
+    })
     setLoading(true)
     fetch('expdata.json')
       .then(res => res.json())
@@ -28,12 +44,13 @@ const Home = () => {
         <div>
           <div className='flex justify-between'>
             <p className='text-xl font-bold'>Homes</p>
-            <Link to='/coming-soon'><p>See all</p></Link>
+            <Link to='/all-home'><p>See all</p></Link>
           </div>
           <div className="flex justify-between px-4 flex-wrap">
             {
-              [...Array(3)].map((exp, i) => <HomeCard
-                key={i}
+              allHomes.map(singleHome => <HomeCard
+                key={singleHome._id}
+                singleHome={singleHome}
               >
 
               </HomeCard>)

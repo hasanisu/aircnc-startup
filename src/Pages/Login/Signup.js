@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { setAuthToken } from '../../api/auth'
 import PrimaryButton from '../../Components/Button/PrimaryButton'
+import SmallSpinner from '../../Components/Spinner/SmallSpinner'
 import { AuthContext } from '../../contexts/AuthProvider'
 
 
@@ -46,6 +47,7 @@ const Signup = () => {
           .then(
             // eikahne varify email dekhabo
             setAuthToken(name, email, imageData.data.display_url),
+            setLoading(false),
             navigate(from, {replace: true})
 
           )
@@ -72,6 +74,7 @@ const Signup = () => {
     signInWithGoogle()
     .then(result => {
       setAuthToken(result.user.displayName,  result.user.photoURL, result.user.email,)
+      setLoading(false)
       navigate(from, {replace: true})
       })
     .catch(err=>console.error(err))
@@ -154,7 +157,7 @@ const Signup = () => {
                 type='submit'
                 classes='w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100'
               >
-                Sign up
+              {loading ? <SmallSpinner></SmallSpinner> : 'Sign up'}
               </PrimaryButton>
             </div>
           </div>

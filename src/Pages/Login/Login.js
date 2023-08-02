@@ -27,6 +27,7 @@ const Login = () => {
     .then(result => {
       toast.success('Successfully Login')
       setAuthToken(result.name, email, result.photoURL)
+      setLoading(false)
       navigate(from, {replace: true})
       
     })
@@ -46,6 +47,7 @@ const Login = () => {
     .then(result => {
       console.log(result.user)
       setAuthToken(result.user.displayName, result.user.email, result.user.photoURL)
+      setLoading(false)
       navigate(from, {replace: true})
       })
     .catch(err=>console.error(err))

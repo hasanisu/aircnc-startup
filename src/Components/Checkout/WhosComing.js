@@ -1,7 +1,7 @@
 import React from 'react'
 
 const WhosComing = ({ setSelectedIndex, host, bookingData, setBookingData }) => {
-  console.log(host)
+  
   return (
     <>
       <h1 className='text-2xl font-bold'>Traveling for work?</h1>
@@ -29,7 +29,7 @@ const WhosComing = ({ setSelectedIndex, host, bookingData, setBookingData }) => 
         cols='60'
         rows='10'
         value={bookingData.message}
-        onChange={event => setBookingData({...bookingData, massage:event.target.value})}
+        onChange={event => setBookingData({...bookingData, comment:event.target.value})}
       ></textarea>
       <button
         className='py-2 px-4 rounded-md hover:text-gray-100 bg-gradient-to-r from-emerald-500 to-lime-500 text-white'

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { getImageUrl } from '../../api/imageUpload';
 import { getRole, hostRequest } from '../../api/user';
 import BecomeHostForm from '../../Components/Form/BecomeHostForm';
@@ -34,7 +35,14 @@ const BecomeAhost = () => {
                 role: 'requested',
                 email: user.email,
             }
-            hostRequest(hostData).then(data => console.log(data)).catch(err => console.log(err))
+            hostRequest(hostData)
+            .then(data => {
+                if(data.acknowledged){
+
+                    toast.success('Successfully send your request')
+                }
+            })
+            .catch(err => console.log(err))
         })
 
 

@@ -43,7 +43,7 @@ const AllUsers = () => {
                 </thead>
 
                 {users &&
-                    users.map((user, i) => <tbody key={user._id}>
+                    users.map((user, i) => <tbody key={i}>
                         <tr>
                             <td>{i + 1}</td>
                             <td>

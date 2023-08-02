@@ -7,41 +7,30 @@ import { AuthContext } from '../contexts/AuthProvider'
 import toast from 'react-hot-toast'
 import Payment from '../Components/Checkout/Payment'
 import { saveBooking } from '../api/bookings'
+import {useLocation} from 'react-router-dom';
 
 const Checkout = () => {
   const { user } = useContext(AuthContext)
+  const { state:checkoutData } = useLocation();
+  console.log(checkoutData)
 
-  const homeData = {
-    _id: '60ehjhedhjdj3434',
-    location: 'Dhaka, Bangladesh',
-    title: 'Huge Apartment with 4 bedrooms',
-    image: 'https://i.ibb.co/YPXktqs/Home1.jpg',
-    from: '17/11/2022',
-    to: '21/11/2022',
-    host: {
-      name: 'John Doe',
-      image: 'https://i.ibb.co/6JM5VJF/photo-1633332755192-727a05c4013d.jpg',
-      email: 'johndoe@gmail.com',
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  
+  const [bookingData, setBookingData] = useState({
+    home: {
+      id: checkoutData.roomData?._id,
+      image: checkoutData.roomData.image,
+      title: checkoutData.roomData.title,
+      location: checkoutData.roomData.location,
+      form: checkoutData.roomData.from,
+      to: checkoutData.roomData.to
     },
-    price: 98,
-    total_guest: 4,
-    bedrooms: 2,
-    bathrooms: 2,
-    ratings: 4.8,
-    reviews: 64,
-  }
-
-
- const [bookingData, setBookingData] = useState({
-    homeId: homeData._id,
-    hostEmail: homeData?.host?.email,
-    massage:'',
-    total: parseFloat(homeData.price) + 31,
+    hostEmail: checkoutData?.roomData?.host?.email,
+    comment:'',
+    totalPrice: parseFloat(checkoutData?.totalPrice),
     guestEmail: user?.email,
  })
 
-
-  const [selectedIndex, setSelectedIndex] = useState(0)
 
  const handleBooking=()=>{
     console.log(bookingData);
@@ -128,13 +117,16 @@ const Checkout = () => {
           </Tab.List>
           <Tab.Panels>
             <Tab.Panel>
-              <ReviewHouse setSelectedIndex={setSelectedIndex} />
+              <ReviewHouse setSelectedIndex={setSelectedIndex}
+               homeData={{
+                ...checkoutData?.roomData, totalNights:checkoutData?.totalNights
+                }} />
             </Tab.Panel>
             <Tab.Panel>
               {/* WhosComing Comp */}
               <WhosComing
                 setSelectedIndex={setSelectedIndex}
-                host={homeData?.host}
+                host={checkoutData?.roomData?.host}
                 bookingData={bookingData}
                 setBookingData={setBookingData}
               />
@@ -148,7 +140,8 @@ const Checkout = () => {
       </div>
 
       {/* Cart */}
-      <CheckoutCart />
+      <CheckoutCart  
+      homeData={checkoutData} />
     </div>
   )
 }

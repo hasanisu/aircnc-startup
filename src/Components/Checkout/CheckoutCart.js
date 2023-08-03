@@ -5,7 +5,6 @@ import {format} from 'date-fns'
 const CheckoutCart = ({homeData}) => {
   const {bedrooms, from, to, price, title, image } = homeData.roomData;
 
-  console.log(homeData)
   let totalNights = 2
   let sub_total = 150
   let total = 200

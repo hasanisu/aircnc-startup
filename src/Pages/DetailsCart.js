@@ -32,7 +32,7 @@ const handleReserve =()=>{
         totalPrice: total,
     }
     navigate('/checkout', {state: data})
-    console.log(data)
+    
 }
 
   // Booking state

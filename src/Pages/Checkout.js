@@ -5,14 +5,17 @@ import CheckoutCart from '../Components/Checkout/CheckoutCart'
 import WhosComing from '../Components/Checkout/WhosComing'
 import { AuthContext } from '../contexts/AuthProvider'
 import toast from 'react-hot-toast'
-import Payment from '../Components/Checkout/Payment'
 import { saveBooking } from '../api/bookings'
 import {useLocation} from 'react-router-dom';
+import CheckoutForm from '../Components/Form/CheckoutForm'
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
 
 const Checkout = () => {
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
   const { user } = useContext(AuthContext)
   const { state:checkoutData } = useLocation();
-  console.log(checkoutData)
+  
 
   const [selectedIndex, setSelectedIndex] = useState(0)
   
@@ -133,7 +136,10 @@ const Checkout = () => {
             </Tab.Panel>
             <Tab.Panel>
               {/* Payment Comp */}
-              <Payment  handleBooking={handleBooking} />
+              {/* <CheckOutForm  handleBooking={handleBooking} /> */}
+              <Elements stripe={stripePromise}>
+                <CheckoutForm bookingData={bookingData}/>
+              </Elements>
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

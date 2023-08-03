@@ -2,7 +2,6 @@ import React from 'react';
 import Heading from './Heading';
 
 const Header = (roomData) => {
-    console.log(roomData.roomData, 'img')
     return (
         <>
             <Heading title={roomData.title} subtitle={roomData.location} />

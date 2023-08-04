@@ -4,8 +4,6 @@ import ReviewHouse from '../Components/Checkout/ReviewHouse'
 import CheckoutCart from '../Components/Checkout/CheckoutCart'
 import WhosComing from '../Components/Checkout/WhosComing'
 import { AuthContext } from '../contexts/AuthProvider'
-import toast from 'react-hot-toast'
-import { saveBooking } from '../api/bookings'
 import {useLocation} from 'react-router-dom';
 import CheckoutForm from '../Components/Form/CheckoutForm'
 import {Elements} from '@stripe/react-stripe-js';
@@ -21,12 +19,12 @@ const Checkout = () => {
   
   const [bookingData, setBookingData] = useState({
     home: {
-      id: checkoutData.roomData?._id,
-      image: checkoutData.roomData.image,
-      title: checkoutData.roomData.title,
-      location: checkoutData.roomData.location,
-      form: checkoutData.roomData.from,
-      to: checkoutData.roomData.to
+      id: checkoutData?.roomData?._id,
+      image: checkoutData?.roomData.image,
+      title: checkoutData?.roomData.title,
+      location: checkoutData?.roomData.location,
+      form: checkoutData?.roomData.from,
+      to: checkoutData?.roomData.to
     },
     hostEmail: checkoutData?.roomData?.host?.email,
     comment:'',
@@ -35,17 +33,17 @@ const Checkout = () => {
  })
 
 
- const handleBooking=()=>{
-    console.log(bookingData);
-    saveBooking(bookingData)
-    .then(data => {
-        console.log(data)
-        toast.success('Successfully posted your bookings')
-    })
-    .catch(err => 
-        toast.error(err?.massage)
-        );
- }
+//  const handleBooking=()=>{
+//     console.log(bookingData);
+//     saveBooking(bookingData)
+//     .then(data => {
+//         console.log(data)
+//         toast.success('Successfully posted your bookings')
+//     })
+//     .catch(err => 
+//         toast.error(err?.massage)
+//         );
+//  }
 
 
   return (
